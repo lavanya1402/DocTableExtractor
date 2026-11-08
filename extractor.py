@@ -8,7 +8,8 @@ from img2table.ocr import TesseractOCR
 from config import OCR_LANG, OCR_PSM, MIN_CONFIDENCE, TESSERACT_PATH
 
 # Important: tell pytesseract exact executable
-pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+if TESSERACT_PATH:
+    pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
 
 def extract_tables_from_image(image_path: str) -> List[pd.DataFrame]:

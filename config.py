@@ -3,9 +3,14 @@ import os
 # =========================
 # PATH CONFIG
 # =========================
-TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-TESSDATA_DIR = r"C:\Program Files\Tesseract-OCR\tessdata"
-POPPLER_PATH = r"C:\Users\lavan\Desktop\poppler\poppler-25.12.0\Library\bin"
+# Tesseract and Poppler are found on the system PATH by default.
+# On Windows, if they are not on PATH, set these in your environment or .env:
+#   TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe
+#   TESSDATA_PREFIX=C:\Program Files\Tesseract-OCR\tessdata
+#   POPPLER_PATH=C:\path\to\poppler\Library\bin
+TESSERACT_PATH = os.getenv("TESSERACT_CMD") or None
+TESSDATA_DIR = os.getenv("TESSDATA_PREFIX") or None
+POPPLER_PATH = os.getenv("POPPLER_PATH") or None
 
 # =========================
 # OCR / EXTRACTION CONFIG
@@ -31,6 +36,9 @@ EXPECTED_COLUMNS = [
 # =========================
 # ENV SETUP
 # =========================
-os.environ["TESSDATA_PREFIX"] = TESSDATA_DIR
-os.environ["PATH"] += os.pathsep + os.path.dirname(TESSERACT_PATH)
-os.environ["PATH"] += os.pathsep + POPPLER_PATH
+if TESSDATA_DIR:
+    os.environ["TESSDATA_PREFIX"] = TESSDATA_DIR
+if TESSERACT_PATH:
+    os.environ["PATH"] += os.pathsep + os.path.dirname(TESSERACT_PATH)
+if POPPLER_PATH:
+    os.environ["PATH"] += os.pathsep + POPPLER_PATH

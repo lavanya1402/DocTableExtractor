@@ -17,8 +17,8 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
     try:
-        st.caption(f"Tesseract path: {TESSERACT_PATH}")
-        st.caption(f"Poppler path: {POPPLER_PATH}")
+        st.caption(f"Tesseract path: {TESSERACT_PATH or 'system PATH'}")
+        st.caption(f"Poppler path: {POPPLER_PATH or 'system PATH'}")
 
         with st.spinner("Running full extraction pipeline..."):
             result = run_pipeline(uploaded_file)

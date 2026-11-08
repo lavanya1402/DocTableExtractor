@@ -51,3 +51,5 @@ dist/
 data/
 uploads/
 outputs/
+.ruff_cache/
+.pytest_cache/

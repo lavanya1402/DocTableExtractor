@@ -45,8 +45,9 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     df = df.fillna("")
 
-    # Apply cleaning cell-wise
-    df = df.applymap(basic_clean_text)
+    # Apply cleaning cell-wise (DataFrame.map replaced applymap in pandas 2.1)
+    cell_map = df.map if hasattr(df, "map") else df.applymap
+    df = cell_map(basic_clean_text)
 
     # Drop fully blank rows
     df = df.loc[~(df == "").all(axis=1)]
